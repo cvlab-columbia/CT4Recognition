@@ -1,7 +1,7 @@
 # CVPR Causal Transportability for Visual Recognition
 
 
-## MNIST
+## ColorMNIST
 
 Run `python fd_classifier_cmnist.py`.
 
