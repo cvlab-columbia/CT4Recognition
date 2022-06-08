@@ -69,17 +69,6 @@ class WB_MultiDomainLoaderTriple(torch.utils.data.Dataset):
             if self.split_array[cnt]==0:  # Train
                 all_data.append([os.path.join(self.dataset_root_dir, self.filename_array[cnt]), self.y_array[cnt]])
 
-        #
-        # for each in self.train_split:
-        #     domain_path = os.path.join(self.dataset_root_dir, each)
-        #     for cate in self.categories_list:
-        #         cate_path = os.path.join(domain_path, cate)
-        #         for img in os.listdir(cate_path):
-        #             cnt+=1
-        #             if cnt==self.subsample:
-        #                 all_data.append([os.path.join(cate_path, img), cate, each])
-        #                 cnt=0
-
         all_cate=[[], []]
         for d in all_data:
             each, id = d
@@ -99,8 +88,6 @@ class WB_MultiDomainLoaderTriple(torch.utils.data.Dataset):
         img_x_4 = self.augment_transform(img_x_ori)
 
         return img_x, img_x_2, img_x_3, img_x_4
-
-
 
 
 class WB_MultiDomainLoaderTripleFD(torch.utils.data.Dataset):
@@ -142,14 +129,6 @@ class WB_MultiDomainLoaderTripleFD(torch.utils.data.Dataset):
                 mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
 
-
-        # tr_example_path = os.path.join(dataset_root_dir, train_split[0])
-        # self.categories_list = os.listdir(tr_example_path)
-        #
-        # self.categories_list.sort()
-        #
-        # self.category2id = {filename: fileintkey for fileintkey, filename in enumerate(self.categories_list)}
-
         self.all_data, self.all_cate = self.make_dataset()
 
 
@@ -182,17 +161,13 @@ class WB_MultiDomainLoaderTripleFD(torch.utils.data.Dataset):
         img_path, label = self.all_data[index]
         img_x_ori = Image.open(img_path).convert("RGB")
         img_x = self.augment_transform(img_x_ori)
-        # img_x_2 = self.augment_transform(img_x_ori)
-        # img_x_3 = self.augment_transform(img_x_ori)
-        # img_x_4 = self.augment_transform(img_x_ori)
-
 
         img_xp_path = random.sample(self.all_cate[label], 1)[0]
 
         img_xp = Image.open(img_xp_path).convert("RGB")
         img_xp = self.transform(img_xp)
 
-        return img_x,  img_xp, label # img_x_2, img_x_3, img_x_4,
+        return img_x,  img_xp, label
 
 
 
